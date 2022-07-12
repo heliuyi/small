@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>接口自动化测试报告</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--    页面样式-->
+    <style type="text/css">
+        /*标题样式*/
+
+        .main {
+            background: rgba(7, 10, 88, 0.99);
+        }
+
+        .title {
+            width: auto;
+            height: 80px;
+            text-align: center;
+            font: bolder 30px/80px "Microsoft YaHei UI";
+            color: #fff;
+            background: rgba(3, 14, 70, 0.5);
+            border-bottom: solid 1px rgb(3, 14, 70);
+            margin-bottom: 10px;
+        }
+
+        .content-box {
+            height: 700px;
+            width: 100%;
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .box1 {
+            flex: 3;
+        }
+
+        .box2 {
+            flex: 5;
+            margin: 0 10px;
+        }
+
+        .box3 {
+            flex: 4;
+        }
+
+        .panel {
+            position: relative;
+            border: 1px solid rgba(25, 186, 139, 0.17);
+            background: rgba(3, 14, 70, 0.5);
+            padding: 0 10px 50px;
+            margin-bottom: 10px;
+        }
+
+        .panel h2, .test_info h2 {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: #007bff;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .panel .chart {
+            height: 250px;
+        }
+
+        .panel .chart2 {
+            height: 350px;
+        }
+
+        .panel .desc {
+            height: 150px;
+        }
+
+        .panel .desc .info {
+            font: normal 18px/25px "Microsoft YaHei UI";
+            color: #fff;
+            display: flex;
+        }
+
+        .panel .desc .info div {
+            padding: 10px;
+            border: solid 1px #6c757d;
+        }
+
+        .panel .desc .info div span {
+            margin-left: 20px;
+        }
+
+
+        /* 执行信息样式   */
+        .test_info {
+            width: 100%;
+            padding: 20px 100px;
+            background: rgba(3, 14, 70, 0.5);
+
+        }
+
+        .table td, .table th {
+            border: solid 1px #5765a4 !important;
+            padding: 0 !important;
+            line-height: 40px;
+            text-align: center;
+            height: 40px;
+            color: #fff;
+        }
+
+        select {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 2em;
+            width: 8em;
+            margin-left: 2em;
+        }
+
+        option {
+            text-align: center;
+            height: 36px;
+            font: none 18px/36px "Microsoft YaHei UI";
+            color: #28a745 !important;
+        }
+
+        .test_log {
+            background: rgba(163, 171, 189, 0.15);
+            width: 100%;
+            height: 50px;
+            border-top: none;
+            border-bottom: none;
+            display: none;
+            text-align: left;
+        }
+
+        .test_log td {
+            text-align: left;
+            height: 30px;
+            margin: 0;
+            padding-left: 3em;
+            padding-right: 3em;
+            font: none 18px/24px "Microsoft YaHei UI";
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+            color: #fff;
+            line-height: 22px;
+            font-size: 14px
+        }
+
+        .chart4 {
+            overflow: auto;
+            width: 100%;
+            height: 600px;
+
+        }
+
+        .chart4::-webkit-scrollbar {
+            width: 10px;
+
+        }
+
+        .chart4::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(4, 0, 225, 0.62);
+            background: #272789;
+            height: 10px;
+
+        }
+
+        .chart4::-webkit-scrollbar-track {
+            /*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 21, 255, 0.54);
+            border-radius: 10px;
+            background: rgba(214, 214, 214, 0.64);
+
+        }
+
+        /*详细内容描述的小标题*/
+        .table_title {
+            text-align: center;
+            background: rgba(1, 2, 37, 0.72);
+            font: bold 18px/30px 'Microsoft YaHei UI';
+            color: #fff;
+            border-radius: 10px
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="main">
+    <div class="title">
+        接口自动化测试报告
+    </div>
+    <div class="content-box">
+        <div class="box1">
+            <div class="panel">
+                <h2>执行结果</h2>
+                <div class="chart" id="char3"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel ">
+                <h2>成功占比</h2>
+                <div class="chart" id="char1"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+        <div class="box2">
+            <div class="panel">
+                <h2>运行信息</h2>
+                <div class="desc">
+
+                    <div class="info">
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm">开始时间</button>
+                            <span>2022-07-08 15:35:13</span>
+                        </div>
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm">用例总数</button>
+                            <span>46</span>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm">运行时长</button>
+                            <span>15.83 S</span>
+                        </div>
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm ">测试人员</button>
+                            <span>Test</span>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm">成功用例</button>
+                            <span>46</span>
+                        </div>
+                        <div style="flex:5">
+                            <button type="button" class="btn btn-primary btn-sm ">通过率</button>
+                            <span>100.00%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>通过率趋势图</h2>
+                <div class="chart2" id="char2"></div>
+            </div>
+        </div>
+        <div class="box3">
+            <div class="panel">
+                <h2>历史构建结果</h2>
+                <div class="chart4">
+                    <table class="table" style="color: #d6d6d6;padding: 0">
+                        <thead>
+                        <tr>
+                            <th scope="col">执行时间</th>
+                            <th scope="col">用例总数</th>
+                            <th scope="col">成功用例数</th>
+                            <th scope="col">通过率</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                        <tr>
+                            <th scope="row">2022-07-08 15:35:13</th>
+                            <td>46</td>
+                            <td>46</td>
+                            <td>100.00%</td>
+                        </tr>
+                        
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="test_info">
+        <h2>本次运行详情</h2>
+        <div class="table_data">
+
+            <table class="table" style="color: #fff">
+                <thead class="text-light" style="background: rgba(3, 14, 70, 0.5)">
+                <tr>
+                    <th scope="col" style="width: 5%;padding: 0">编号</th>
+                    <th scope="col" style="width: 20%;padding: 0">
+                        <span>测试类</span>
+                        <select id="testClass">
+                            <option>所有</option>
+                            
+                            <option>TestsecKill</option>
+                            
+                            <option>TestspecialPrice</option>
+                            
+                            <option>TestpartFullReduce</option>
+                            
+                            <option>TestdeliveryFullReduce</option>
+                            
+                            <option>TestbuyGift</option>
+                            
+                            <option>TestpreSale</option>
+                            
+                            <option>TestgroupBooking</option>
+                            
+                            <option>TestbarGain</option>
+                            
+                            <option>TestgroupCommunity</option>
+                            
+                            <option>Testcategory</option>
+                            
+                        </select>
+
+                    </th>
+                    <th scope="col" style="width: 15%;padding: 0">测试方法</th>
+                    <th scope="col" style="width: 20%;padding: 0">用例描述</th>
+                    <th scope="col" style="width: 10%;padding: 0">执行时间</th>
+                    <th scope="col" style="width: 20%;padding: 0">
+
+                        <span>执行结果</span>
+                        <select id="testResult">
+                            <option>所有</option>
+                            <option class="text-success">成功</option>
+                            <option class="text-danger">失败</option>
+                            <option class="text-warning">错误</option>
+                            <option class="text-info">跳过</option>
+                        </select>
+
+                    </th>
+                    <th scope="col" style="width: 10%;padding: 0">详细信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                <tr class="case_">
+                    <td>1</td>
+                    <td class="TestsecKill">TestsecKill</td>
+                    <td>test_secKill_01</td>
+                    <td>秒杀活动新增</td>
+                    <td>0.189s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>秒杀活动新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+秒杀活动新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_secKill_01 (TestActivity.test_01secKill.TestsecKill)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>2</td>
+                    <td class="TestsecKill">TestsecKill</td>
+                    <td>test_secKill_02</td>
+                    <td>秒杀活动详情</td>
+                    <td>0.0668s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>秒杀活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+秒杀活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9925', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化秒杀389', 'promoteCode': '40597812985692794880', 'promoteBrief': None, 'promoteType': 1, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-29 00:00:00', 'startTime': '00:00', 'endTime': '23:59', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 1, 'promoteTimeList': [{'createTime': '2022-07-08 15:35:22', 'updateTime': '2022-07-08 15:35:22', 'creator': '18202162273', 'modifier': '18202162273', 'id': '130', 'tenantCode': '10000001', 'name': '自动化全天场次945', 'startTime': '01:59:19', 'endTime': '23:19:19'}], 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:23', 'activityExtra': None}, 'success': True}
+test_secKill_02 (TestActivity.test_01secKill.TestsecKill)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>3</td>
+                    <td class="TestsecKill">TestsecKill</td>
+                    <td>test_secKill_03</td>
+                    <td>秒杀门店详情</td>
+                    <td>0.0868s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>秒杀门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+秒杀门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_secKill_03 (TestActivity.test_01secKill.TestsecKill)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>4</td>
+                    <td class="TestsecKill">TestsecKill</td>
+                    <td>test_secKill_04</td>
+                    <td>秒杀商品详情</td>
+                    <td>0.0728s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>秒杀商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+秒杀商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_secKill_04 (TestActivity.test_01secKill.TestsecKill)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>5</td>
+                    <td class="TestsecKill">TestsecKill</td>
+                    <td>test_secKill_05</td>
+                    <td>秒杀活动关闭</td>
+                    <td>0.204s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>秒杀活动关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+秒杀活动关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_secKill_05 (TestActivity.test_01secKill.TestsecKill)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>6</td>
+                    <td class="TestspecialPrice">TestspecialPrice</td>
+                    <td>test_specialPrice_01</td>
+                    <td>限时促销新增</td>
+                    <td>0.252s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>限时促销新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+限时促销新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_specialPrice_01 (TestActivity.test_02specialPrice.TestspecialPrice)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>7</td>
+                    <td class="TestspecialPrice">TestspecialPrice</td>
+                    <td>test_specialPrice_02</td>
+                    <td>限时促销活动详情</td>
+                    <td>0.0748s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>限时促销活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+限时促销活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9929', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化限时促销775', 'promoteCode': '41597812989476057088', 'promoteBrief': None, 'promoteType': 2, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-23 00:00:00', 'startTime': '08:49:06', 'endTime': '18:49:06', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 0, 'promoteTimeList': None, 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:24', 'activityExtra': None}, 'success': True}
+test_specialPrice_02 (TestActivity.test_02specialPrice.TestspecialPrice)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>8</td>
+                    <td class="TestspecialPrice">TestspecialPrice</td>
+                    <td>test_specialPrice_03</td>
+                    <td>限时促销门店详情</td>
+                    <td>0.0708s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>限时促销门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+限时促销门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_specialPrice_03 (TestActivity.test_02specialPrice.TestspecialPrice)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>9</td>
+                    <td class="TestspecialPrice">TestspecialPrice</td>
+                    <td>test_specialPrice_04</td>
+                    <td>限时促销商品详情</td>
+                    <td>0.0519s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>限时促销商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+限时促销商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_specialPrice_04 (TestActivity.test_02specialPrice.TestspecialPrice)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>10</td>
+                    <td class="TestspecialPrice">TestspecialPrice</td>
+                    <td>test_specialPrice_05</td>
+                    <td>限时促销关闭</td>
+                    <td>0.124s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>限时促销关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+限时促销关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_specialPrice_05 (TestActivity.test_02specialPrice.TestspecialPrice)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>11</td>
+                    <td class="TestpartFullReduce">TestpartFullReduce</td>
+                    <td>test_partFullReduce_01</td>
+                    <td>部分满减新增</td>
+                    <td>0.195s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>部分满减新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+部分满减新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_partFullReduce_01 (TestActivity.test_03partFullReduce.TestpartFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>12</td>
+                    <td class="TestpartFullReduce">TestpartFullReduce</td>
+                    <td>test_partFullReduce_02</td>
+                    <td>部分满减详情</td>
+                    <td>0.0718s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>部分满减详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+部分满减详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9933', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化部分满减761', 'promoteCode': '43597812993016049664', 'promoteBrief': None, 'promoteType': 4, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-26 00:00:00', 'startTime': '00:00:00', 'endTime': '23:59:59', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 0, 'promoteTimeList': None, 'ruleList': [{'buyValue': 16.0, 'giftValue': 15.0}, {'buyValue': 5.0, 'giftValue': 4.0}, {'buyValue': 4.0, 'giftValue': 3.0}, {'buyValue': 3.0, 'giftValue': 2.0}, {'buyValue': 2.0, 'giftValue': 1.0}], 'buyValue': None, 'createTime': '2022-07-08 15:35:24', 'activityExtra': None}, 'success': True}
+test_partFullReduce_02 (TestActivity.test_03partFullReduce.TestpartFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>13</td>
+                    <td class="TestpartFullReduce">TestpartFullReduce</td>
+                    <td>test_partFullReduce_03</td>
+                    <td>部分满减门店详情</td>
+                    <td>0.0987s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>部分满减门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+部分满减门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_partFullReduce_03 (TestActivity.test_03partFullReduce.TestpartFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>14</td>
+                    <td class="TestpartFullReduce">TestpartFullReduce</td>
+                    <td>test_partFullReduce_04</td>
+                    <td>部分满减商品详情</td>
+                    <td>0.0578s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>部分满减商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+部分满减商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_partFullReduce_04 (TestActivity.test_03partFullReduce.TestpartFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>15</td>
+                    <td class="TestpartFullReduce">TestpartFullReduce</td>
+                    <td>test_partFullReduce_05</td>
+                    <td>部分满减关闭</td>
+                    <td>0.17s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>部分满减关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+部分满减关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_partFullReduce_05 (TestActivity.test_03partFullReduce.TestpartFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>16</td>
+                    <td class="TestdeliveryFullReduce">TestdeliveryFullReduce</td>
+                    <td>test_deliveryFullReduce_01</td>
+                    <td>配送费满减新增</td>
+                    <td>0.363s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>配送费满减新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+配送费满减新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': True, 'success': True}
+test_deliveryFullReduce_01 (TestActivity.test_04deliveryFullReduce.TestdeliveryFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>17</td>
+                    <td class="TestdeliveryFullReduce">TestdeliveryFullReduce</td>
+                    <td>test_deliveryFullReduce_02</td>
+                    <td>配送费满减详情</td>
+                    <td>0.0788s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>配送费满减详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+配送费满减详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9937', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化配送费满减250', 'promoteCode': '42597812998598668288', 'promoteBrief': None, 'promoteType': 3, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-21 00:00:00', 'startTime': '00:00:00', 'endTime': '23:59:59', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 0, 'promoteTimeList': None, 'ruleList': [{'buyValue': 16.0, 'giftValue': 15.0}, {'buyValue': 5.0, 'giftValue': 4.0}, {'buyValue': 4.0, 'giftValue': 3.0}, {'buyValue': 3.0, 'giftValue': 2.0}, {'buyValue': 2.0, 'giftValue': 1.0}], 'buyValue': None, 'createTime': '2022-07-08 15:35:26', 'activityExtra': None}, 'success': True}
+test_deliveryFullReduce_02 (TestActivity.test_04deliveryFullReduce.TestdeliveryFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>18</td>
+                    <td class="TestdeliveryFullReduce">TestdeliveryFullReduce</td>
+                    <td>test_deliveryFullReduce_03</td>
+                    <td>配送费满减门店详情</td>
+                    <td>0.0798s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>配送费满减门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+配送费满减门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_deliveryFullReduce_03 (TestActivity.test_04deliveryFullReduce.TestdeliveryFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>19</td>
+                    <td class="TestdeliveryFullReduce">TestdeliveryFullReduce</td>
+                    <td>test_deliveryFullReduce_04</td>
+                    <td>配送费满减关闭</td>
+                    <td>0.142s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>配送费满减关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+配送费满减关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_deliveryFullReduce_04 (TestActivity.test_04deliveryFullReduce.TestdeliveryFullReduce)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>20</td>
+                    <td class="TestbuyGift">TestbuyGift</td>
+                    <td>test_buyGift_01</td>
+                    <td>买赠活动新增</td>
+                    <td>0.197s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>买赠活动新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+买赠活动新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_buyGift_01 (TestActivity.test_05buyGift.TestbuyGift)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>21</td>
+                    <td class="TestbuyGift">TestbuyGift</td>
+                    <td>test_buyGift_02</td>
+                    <td>买赠活动活动详情</td>
+                    <td>0.0738s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>买赠活动活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+买赠活动活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9941', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化买赠活动425', 'promoteCode': '44597813001819893760', 'promoteBrief': None, 'promoteType': 5, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-23 00:00:00', 'startTime': '00:00:00', 'endTime': '23:59:59', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 1, 'promoteTimeList': None, 'ruleList': [{'buyValue': 6.0, 'giftValue': 5.0}, {'buyValue': 5.0, 'giftValue': 4.0}, {'buyValue': 4.0, 'giftValue': 3.0}, {'buyValue': 3.0, 'giftValue': 2.0}, {'buyValue': 2.0, 'giftValue': 1.0}], 'buyValue': None, 'createTime': '2022-07-08 15:35:26', 'activityExtra': None}, 'success': True}
+test_buyGift_02 (TestActivity.test_05buyGift.TestbuyGift)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>22</td>
+                    <td class="TestbuyGift">TestbuyGift</td>
+                    <td>test_buyGift_03</td>
+                    <td>买赠活动门店详情</td>
+                    <td>0.104s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>买赠活动门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+买赠活动门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_buyGift_03 (TestActivity.test_05buyGift.TestbuyGift)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>23</td>
+                    <td class="TestbuyGift">TestbuyGift</td>
+                    <td>test_buyGift_04</td>
+                    <td>买赠活动商品详情</td>
+                    <td>0.0588s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>买赠活动商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+买赠活动商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 3, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_buyGift_04 (TestActivity.test_05buyGift.TestbuyGift)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>24</td>
+                    <td class="TestbuyGift">TestbuyGift</td>
+                    <td>test_buyGift_05</td>
+                    <td>买赠活动关闭</td>
+                    <td>0.206s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>买赠活动关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+买赠活动关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_buyGift_05 (TestActivity.test_05buyGift.TestbuyGift)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>25</td>
+                    <td class="TestpreSale">TestpreSale</td>
+                    <td>test_preSale_01</td>
+                    <td>预售活动新增</td>
+                    <td>0.331s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>预售活动新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+预售活动新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_preSale_01 (TestActivity.test_06preSale.TestpreSale)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>26</td>
+                    <td class="TestpreSale">TestpreSale</td>
+                    <td>test_preSale_02</td>
+                    <td>预售活动详情</td>
+                    <td>0.158s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>预售活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+预售活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9945', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化预售活动625', 'promoteCode': '46597813005607350272', 'promoteBrief': None, 'promoteType': 7, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-28 00:00:00', 'startTime': '17:40:33', 'endTime': '17:40:35', 'pickUpStartTime': '2022-07-08 15:35:18', 'pickUpEndTime': '2022-08-09 23:59:59', 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 1, 'promoteTimeList': None, 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:27', 'activityExtra': None}, 'success': True}
+test_preSale_02 (TestActivity.test_06preSale.TestpreSale)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>27</td>
+                    <td class="TestpreSale">TestpreSale</td>
+                    <td>test_preSale_03</td>
+                    <td>预售活动门店详情</td>
+                    <td>0.438s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>预售活动门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+预售活动门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_preSale_03 (TestActivity.test_06preSale.TestpreSale)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>28</td>
+                    <td class="TestpreSale">TestpreSale</td>
+                    <td>test_preSale_04</td>
+                    <td>预售活动商品详情</td>
+                    <td>0.126s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>预售活动商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+预售活动商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_preSale_04 (TestActivity.test_06preSale.TestpreSale)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>29</td>
+                    <td class="TestpreSale">TestpreSale</td>
+                    <td>test_preSale_05</td>
+                    <td>预售活动关闭</td>
+                    <td>0.147s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>预售活动关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+预售活动关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_preSale_05 (TestActivity.test_06preSale.TestpreSale)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>30</td>
+                    <td class="TestgroupBooking">TestgroupBooking</td>
+                    <td>test_groupBooking_01</td>
+                    <td>拼团活动新增</td>
+                    <td>0.203s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>拼团活动新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+拼团活动新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_groupBooking_01 (TestActivity.test_07groupBooking.TestgroupBooking)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>31</td>
+                    <td class="TestgroupBooking">TestgroupBooking</td>
+                    <td>test_groupBooking_02</td>
+                    <td>拼团活动详情</td>
+                    <td>0.0878s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>拼团活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+拼团活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9949', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化预售活动961', 'promoteCode': '47597813012087549952', 'promoteBrief': None, 'promoteType': 8, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-29 00:00:00', 'startTime': '00:00:00', 'endTime': '23:59:59', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 259200, 'superpositionCoupon': 1, 'promoteTimeList': None, 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:29', 'activityExtra': None}, 'success': True}
+test_groupBooking_02 (TestActivity.test_07groupBooking.TestgroupBooking)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>32</td>
+                    <td class="TestgroupBooking">TestgroupBooking</td>
+                    <td>test_groupBooking_03</td>
+                    <td>拼团活动门店详情</td>
+                    <td>0.0828s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>拼团活动门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+拼团活动门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_groupBooking_03 (TestActivity.test_07groupBooking.TestgroupBooking)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>33</td>
+                    <td class="TestgroupBooking">TestgroupBooking</td>
+                    <td>test_groupBooking_04</td>
+                    <td>拼团活动商品详情</td>
+                    <td>0.379s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>拼团活动商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+拼团活动商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_groupBooking_04 (TestActivity.test_07groupBooking.TestgroupBooking)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>34</td>
+                    <td class="TestgroupBooking">TestgroupBooking</td>
+                    <td>test_groupBooking_05</td>
+                    <td>拼团活动关闭</td>
+                    <td>0.342s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>拼团活动关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+拼团活动关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_groupBooking_05 (TestActivity.test_07groupBooking.TestgroupBooking)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>35</td>
+                    <td class="TestbarGain">TestbarGain</td>
+                    <td>test_barGain_01</td>
+                    <td>砍价活动新增</td>
+                    <td>0.379s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>砍价活动新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+砍价活动新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_barGain_01 (TestActivity.test_08barGain.TestbarGain)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>36</td>
+                    <td class="TestbarGain">TestbarGain</td>
+                    <td>test_barGain_02</td>
+                    <td>砍价活动详情</td>
+                    <td>0.126s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>砍价活动详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+砍价活动详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9953', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化砍价助力561', 'promoteCode': '48597813018186067968', 'promoteBrief': None, 'promoteType': 9, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-21 00:00:00', 'startTime': '02:00:30', 'endTime': '20:00:30', 'pickUpStartTime': None, 'pickUpEndTime': None, 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 1, 'promoteTimeList': None, 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:30', 'activityExtra': {'activityId': '9953', 'firstBargain': 0, 'bargainUserLimit': 2, 'showProgress': 1, 'promoteDescribe': '<p>自动化测试砍价活动</p>', 'expireTime': '1', 'canBuyWay': 1}}, 'success': True}
+test_barGain_02 (TestActivity.test_08barGain.TestbarGain)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>37</td>
+                    <td class="TestbarGain">TestbarGain</td>
+                    <td>test_barGain_03</td>
+                    <td>砍价活动门店详情</td>
+                    <td>0.113s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>砍价活动门店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+砍价活动门店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_barGain_03 (TestActivity.test_08barGain.TestbarGain)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>38</td>
+                    <td class="TestbarGain">TestbarGain</td>
+                    <td>test_barGain_04</td>
+                    <td>砍价活动商品详情</td>
+                    <td>0.0359s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>砍价活动商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+砍价活动商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_barGain_04 (TestActivity.test_08barGain.TestbarGain)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>39</td>
+                    <td class="TestbarGain">TestbarGain</td>
+                    <td>test_barGain_05</td>
+                    <td>砍价活动关闭</td>
+                    <td>0.406s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>砍价活动关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+砍价活动关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_barGain_05 (TestActivity.test_08barGain.TestbarGain)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>40</td>
+                    <td class="TestgroupCommunity">TestgroupCommunity</td>
+                    <td>test_groupCommunity_01</td>
+                    <td>社区团购新增</td>
+                    <td>0.492s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>字典:<class 'dict'>
+字符串：<class 'str'>
+社区团购新增===期望结果：{'code': 0, 'msg': None, 'data': '[]', 'success': 'True'}
+社区团购新增===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [], 'success': True}
+test_groupCommunity_01 (TestActivity.test_09groupCommunity.TestgroupCommunity)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>41</td>
+                    <td class="TestgroupCommunity">TestgroupCommunity</td>
+                    <td>test_groupCommunity_02</td>
+                    <td>社区团购详情</td>
+                    <td>0.119s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>字典:<class 'dict'>
+字符串：<class 'str'>
+社区团购详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+社区团购详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': {'id': '9957', 'shopId': '0', 'companyId': None, 'companyName': None, 'promoteName': '自动化社区团购179', 'promoteCode': '49597813037807022080', 'promoteBrief': None, 'promoteType': 13, 'childType': 1, 'startDate': '2022-07-08 00:00:00', 'endDate': '2022-08-21 00:00:00', 'startTime': '08:42:59', 'endTime': '23:43:01', 'pickUpStartTime': '2022-07-08 15:35:26', 'pickUpEndTime': '2022-08-26 00:00:00', 'weekday': None, 'userType': None, 'promoteImgUrl': None, 'status': 0, 'commonStockType': 0, 'groupExpireTime': 0, 'superpositionCoupon': 1, 'promoteTimeList': None, 'ruleList': None, 'buyValue': None, 'createTime': '2022-07-08 15:35:35', 'activityExtra': None}, 'success': True}
+test_groupCommunity_02 (TestActivity.test_09groupCommunity.TestgroupCommunity)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>42</td>
+                    <td class="TestgroupCommunity">TestgroupCommunity</td>
+                    <td>test_groupCommunity_03</td>
+                    <td>社区团购店详情</td>
+                    <td>0.199s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>字典:<class 'dict'>
+字符串：<class 'str'>
+社区团购店详情===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+社区团购店详情===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': [{'shopId': '2', 'storeCode': '5254', 'shopName': '陕西华都祥实业有限公司', 'errorMsg': None}, {'shopId': '57', 'storeCode': '1005', 'shopName': '乾县新全都购物便利店', 'errorMsg': None}, {'shopId': '58', 'storeCode': '1006', 'shopName': '乾县全都购物广场有限公司', 'errorMsg': None}], 'success': True}
+test_groupCommunity_03 (TestActivity.test_09groupCommunity.TestgroupCommunity)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>43</td>
+                    <td class="TestgroupCommunity">TestgroupCommunity</td>
+                    <td>test_groupCommunity_04</td>
+                    <td>社区团购商品详情</td>
+                    <td>0.0928s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>字典:<class 'dict'>
+字符串：<class 'str'>
+社区团购商品详情===期望结果：{'code': 0, 'msg': 'success', 'success': 'True'}
+社区团购商品详情===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': {'total': 2, 'successNum': 0, 'errorNum': 0, 'clashNum': 0}, 'success': True}
+test_groupCommunity_04 (TestActivity.test_09groupCommunity.TestgroupCommunity)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>44</td>
+                    <td class="TestgroupCommunity">TestgroupCommunity</td>
+                    <td>test_groupCommunity_05</td>
+                    <td>社区团购关闭</td>
+                    <td>0.267s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>字典:<class 'dict'>
+字符串：<class 'str'>
+社区团购关闭===期望结果：{'code': 0, 'msg': None, 'success': 'True'}
+社区团购关闭===接口执行后的响应结果：{'code': 0, 'msg': None, 'data': None, 'success': True}
+test_groupCommunity_05 (TestActivity.test_09groupCommunity.TestgroupCommunity)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>45</td>
+                    <td class="Testcategory">Testcategory</td>
+                    <td>test_category_01</td>
+                    <td>一级分类新增</td>
+                    <td>0.413s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>===========分类的父级Id:{'id': 2830}=================
+一级分类新增===期望结果：{"code":0,"msg":"success","data":"0","success":"True"}
+一级分类新增===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': None, 'success': True}
+test_category_01 (TestGoogs.test_01category.Testcategory)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+                <tr class="case_">
+                    <td>46</td>
+                    <td class="Testcategory">Testcategory</td>
+                    <td>test_category_02</td>
+                    <td>二级分类新增</td>
+                    <td>1.14s</td>
+                    
+                    <td class="text-success">成功</td>
+                    
+                    <td>
+                        <button type="button" class="btn btn_info btn-primary btn-sm">查看详情</button>
+                    </td>
+                </tr>
+
+                <tr class="test_log">
+
+                     <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all">
+                        
+
+                            <pre>===========分类的父级Id:{'id': 2832}=================
+二级分类新增===期望结果：{"code":0,"msg":"success","data":null,"success":"True"}
+二级分类新增===接口执行后的响应结果：{'code': 0, 'msg': 'success', 'data': None, 'success': True}
+test_category_02 (TestGoogs.test_01category.Testcategory)执行——>【通过】
+</pre>
+                        
+                        
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
+
+        <div style="height: 200px"></div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+
+
+<script type="text/javascript">
+
+    const resulte = {
+            "success": `46`,
+            "all": `46`,
+            "fail": `0`,
+            "skip": '0',
+            "error": `0`,
+            "runtime": '15.83 S',
+            "begin_time": "15.83 S",
+            "pass_rate": '100.00',
+        }
+    ;
+    const history = [{'success': 46, 'all': 46, 'fail': 0, 'skip': 0, 'error': 0, 'runtime': '15.83 S', 'begin_time': '2022-07-08 15:35:13', 'pass_rate': '100.00'}];
+
+    var passRate = [];
+    var dTime = [];
+    history.forEach(function (item, index, array) {
+        passRate.push(item.pass_rate);
+        dTime.push(item.begin_time)
+    });
+    if (passRate.length === 1) {
+        passRate.unshift(0);
+        dTime.unshift(0)
+    }
+
+    function char01() {
+        let myChart = echarts.init(document.getElementById('char1'));
+        let option = {
+            color: ['#28a745', '#ffc107', '#dc3545', '#17a2b8'],
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)',
+                backgroundColor: 'rgba(3, 14, 70, 0.5)',
+                borderColor: '#333',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: "13"
+                },
+            },
+            legend: {
+                bottom: "0%",
+                // 小图标的宽度和高度
+                itemWidth: 10,
+                itemHeight: 10,
+                data: ['通过', '失败', '错误', '跳过'],
+                textStyle: {
+                    color: "rgba(255,255,255,.5)",
+                    fontSize: "12"
+                },
+            },
+            series: [
+                {
+                    name: '测试结果',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '20',
+                            fontWeight: 'bold',
+                            color: '#fff',
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: resulte.success, name: '通过'},
+                        {value: resulte.fail, name: '失败'},
+                        {value: resulte.error, name: '错误'},
+                        {value: resulte.skip, name: '跳过'}
+                    ]
+                }
+            ]
+        };
+        myChart.setOption(option)
+
+    }
+
+    char01();
+
+    //    大图
+    function char02() {
+
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = echarts.init(document.getElementById("char2"));
+        // 2. 指定配置和数据
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{a} <br/>{b}:  ({c}%)',
+                backgroundColor: 'rgba(3, 14, 70, 0.5)',
+                borderColor: '#333',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: "13"
+                },
+            },
+
+            grid: {
+                left: "10",
+                top: "30",
+                right: "10",
+                bottom: "0",
+                containLabel: true
+            },
+
+            xAxis: [{
+                type: "category",
+                boundaryGap: false,
+                show: false,
+                axisLabel: {
+                    textStyle: {
+                        color: "rgba(255,255,255,.6)",
+                        fontSize: 12
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: "rgba(255,255,255,.2)"
+                    }
+                },
+
+                data: dTime
+            },
+                {
+                    axisPointer: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    position: "bottom",
+                    offset: 20
+                }
+            ],
+
+            yAxis: [{
+                type: "value",
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)"
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: "rgba(255,255,255,.6)",
+                        fontSize: 12
+                    }
+                },
+
+                splitLine: {
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)"
+                    }
+                }
+            }],
+            series: [{
+                name: "通过率",
+                type: "line",
+                smooth: true,
+                symbol: "circle",
+                symbolSize: 5,
+                showSymbol: true,
+                lineStyle: {
+                    normal: {
+                        color: "#0184d5",
+                        width: 2
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0,
+                            0,
+                            0,
+                            1,
+                            [{
+                                offset: 0,
+                                color: "rgba(1, 132, 213, 0.4)"
+                            },
+                                {
+                                    offset: 0.8,
+                                    color: "rgba(1, 132, 213, 0.1)"
+                                }
+                            ],
+                            false
+                        ),
+                        shadowColor: "rgba(0, 0, 0, 0.1)"
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: "#0184d5",
+                        borderColor: "rgba(221, 220, 107, .1)",
+                        borderWidth: 18
+                    }
+                },
+                data: passRate
+            },
+            ]
+        };
+        // 重新把配置好的新数据给实例对象
+        myChart.setOption(option);
+
+    }
+
+    char02();
+
+    function char03() {
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = echarts.init(document.getElementById("char3"));
+        var data = [resulte.success, resulte.fail, resulte.error, resulte.skip];
+        var titlename = ["通过用例", "失败用例", "错误用例", "跳过用例",];
+        var valdata = [resulte.all, resulte.all, resulte.all, resulte.all];
+        var myColor = ['#28a745', '#ffc107', '#dc3545', '#17a2b8'];
+        option = {
+            //图标位置
+            grid: {
+                top: "10%",
+                left: "22%",
+                bottom: "10%"
+            },
+            xAxis: {
+                show: false
+            },
+            yAxis: [{
+                show: true,
+                data: titlename,
+                inverse: true,
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    color: "#fff",
+
+                    rich: {
+                        lg: {
+                            backgroundColor: "#339911",
+                            color: "#fff",
+                            borderRadius: 15,
+                            align: "center",
+                            width: 15,
+                            height: 15
+                        }
+                    }
+                }
+            },
+                {
+                    show: false,
+                    inverse: true,
+                    data: valdata,
+                    axisLabel: {
+                        textStyle: {
+                            fontSize: 12,
+                            color: "#fff"
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                }
+            ],
+            series: [{
+                type: "bar",
+                yAxisIndex: 0,
+                data: data,
+                barCategoryGap: 50,
+                barWidth: 18,
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: 20,
+                        color: function (params) {
+                            var num = myColor.length;
+                            return myColor[params.dataIndex % num];
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: "right",
+                        formatter: "{c}条",
+                        color:"#fff",
+
+                    }
+                }
+            },
+                {
+                    type: "bar",
+                    yAxisIndex: 1,
+                    barCategoryGap: 50,
+                    data: valdata,
+                    barWidth: 20,
+                    itemStyle: {
+                        normal: {
+                            color: "none",
+                            borderColor: "#00c1de",
+                            borderWidth: 2,
+                            barBorderRadius: 15
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
+    char03()
+
+</script>
+
+
+<script>
+    var tbodyTr = $('tbody .case_');
+    var testResult = $("#testResult");
+    var testClass = $("#testClass");
+    <!--    用例执行详细信息显示切换-->
+    $(".btn_info").click(function () {
+        $(this).parent().parent().next().toggle();
+
+    });
+    // 当选择用例类之后触发
+    testClass.change(function () {
+        $('.test_log').hide();
+        var cls = $(this).val();
+        var res = testResult.val();
+        elementDisplay(cls, res);
+        sort()
+    });
+    testResult.change(function () {
+        var res = $(this).val();
+        var cls = testClass.val();
+        elementDisplay(cls, res);
+        sort()
+    });
+
+    function elementDisplay(cls, res) {
+        // 用例数据的显示
+        if (cls === "所有") {
+            if (res === "所有") {
+                tbodyTr.has('button').show();
+            } else if (res === '成功') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-success').show()
+
+            } else if (res === '错误') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-danger').show()
+
+            } else if (res === '失败') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-warning').show()
+
+            } else if (res === '跳过') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-info').show()
+            }
+        } else {
+            if (res === "所有") {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').show()
+            } else if (res === '成功') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-success').show()
+            } else if (res === '错误') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-danger').show()
+            } else if (res === '失败') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-warning').show()
+            } else if (res === '跳过') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-info').show()
+            }
+        }
+    }
+
+    function sort() {
+        //重新排列显示序号
+        // 选择所有可以见的tr
+        var visibleTr = tbodyTr.filter(":visible");
+
+        visibleTr.each(function (index, element) {
+            element.firstElementChild.innerHTML = index + 1;
+
+        })
+
+    }
+
+    $('.nav-tabs li').click(function () {
+        $(this).find('a').addClass('active');
+        $(this).siblings().find('a').removeClass('active');
+        $(this).parent().next().children('.tab-content div').eq($(this).index()).addClass('active show').siblings().removeClass('active show')
+    });
+
+</script>
+
+
+</body>
+</html>
